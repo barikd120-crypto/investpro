@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>InvestPro – Invest & Earn (Demo)</title>
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f6f8;color:#333}
+header{background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);color:#fff;padding:40px 20px;text-align:center}
+.container{max-width:1100px;margin:auto;padding:20px}
+.hidden{display:none}
+.card{background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 15px rgba(0,0,0,.1);margin-bottom:20px}
+.btn{display:inline-block;padding:10px 20px;background:#2c5364;color:#fff;text-decoration:none;border-radius:25px;border:none;cursor:pointer}
+.btn:hover{background:#1b3a4b}
+input{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #ccc}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+footer{background:#111;color:#ccc;text-align:center;padding:15px;font-size:.85rem}
+nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+</style>
+</head>
+<body>
+<header>
+<h1>InvestPro</h1>
+<p>Demo Invest & Earn Platform (Frontend Only)</p>
+</header>
+
+<div class="container">
+
+<!-- AUTH -->
+<div id="auth" class="card">
+<h2>Login / Sign Up</h2>
+<input id="username" placeholder="Username" />
+<input id="password" type="password" placeholder="Password" />
+<button class="btn" onclick="login()">Enter</button>
+<p style="font-size:.85rem">* Demo login. No real authentication.</p>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="hidden">
+<nav>
+<button class="btn" onclick="show('dash')">Dashboard</button>
+<button class="btn" onclick="show('invest')">Invest</button>
+<button class="btn" onclick="show('referral')">Referral</button>
+<button class="btn" onclick="show('withdraw')">Withdraw</button>
+<button class="btn" onclick="show('admin')">Admin</button>
+<button class="btn" onclick="logout()">Logout</button>
+</nav>
+
+<div id="dash" class="card">
+<h2>User Dashboard</h2>
+<p><b>User:</b> <span id="userLabel"></span></p>
+<p><b>Wallet Balance:</b> ₹<span id="wallet">1000</span></p>
+<p><b>Total Invested:</b> ₹<span id="invested">0</span></p>
+<p><b>Daily Profit (Demo):</b> ₹<span id="profit">0</span></p>
+</div>
+
+<div id="invest" class="card hidden">
+<h2>Invest Now</h2>
+<input id="amount" type="number" placeholder="Enter amount" />
+<button class="btn" onclick="invest()">Confirm Investment</button>
+</div>
+
+<div id="referral" class="card hidden">
+<h2>Referral System</h2>
+<p>Your Referral Code:</p>
+<div class="card"><b id="refCode"></b></div>
+<p>Earn 5% commission on referral investments (demo).</p>
+</div>
+
+<div id="withdraw" class="card hidden">
+<h2>Withdraw Funds</h2>
+<input placeholder="UPI / Bank (Demo)" />
+<input type="number" placeholder="Amount" />
+<button class="btn">Request Withdraw</button>
+<p style="font-size:.85rem">* Demo only</p>
+</div>
+
+<div id="admin" class="card hidden">
+<h2>Admin Panel (Demo)</h2>
+<ul>
+<li>View users</li>
+<li>View investments</li>
+<li>Approve withdrawals</li>
+<li>Manage plans</li>
+</ul>
+</div>
+</div>
+</div>
+
+<footer>
+<p>© 2026 InvestPro</p>
+<p>Disclaimer: Demo project only. No real investments.</p>
+</footer>
+
+<script>
+let wallet=1000, invested=0;
+function login(){
+const u=document.getElementById('username').value;
+if(!u)return alert('Enter username');
+document.getElementById('auth').classList.add('hidden');
+document.getElementById('dashboard').classList.remove('hidden');
+document.getElementById('userLabel').innerText=u;
+document.getElementById('refCode').innerText='REF-'+Math.floor(Math.random()*100000);
+}
+function logout(){location.reload()}
+function show(id){
+['dash','invest','referral','withdraw','admin'].forEach(s=>document.getElementById(s).classList.add('hidden'));
+document.getElementById(id).classList.remove('hidden');
+}
+function invest(){
+const amt=Number(document.getElementById('amount').value);
+if(amt>wallet)return alert('Insufficient balance');
+wallet-=amt; invested+=amt;
+document.getElementById('wallet').innerText=wallet;
+document.getElementById('invested').innerText=invested;
+document.getElementById('profit').innerText=Math.floor(invested*0.02);
+alert('Investment successful (demo)');
+}
+</script>
+</body>
+</html>
